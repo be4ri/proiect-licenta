@@ -3,7 +3,7 @@ import os
 
 class SnpPanelRepository:
     def __init__(self):
-        data_snp_panel = pd.read_csv('proj/data/snp_panel_2.csv')
+        data_snp_panel = pd.read_csv('proj/data/snp_panel.csv')
         self.snp_panel = data_snp_panel
     
     def get_snp_panel(self):

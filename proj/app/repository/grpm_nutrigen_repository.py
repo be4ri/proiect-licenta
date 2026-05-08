@@ -7,6 +7,9 @@ class GrpmNutrigenRepository:
         self.grpm_nutrigen = data_grpm_nutrigen
 
     def get_grpm_nutrigen(self):
+        return self.grpm_nutrigen
+
+    def get_grpm_nutrigen_to_string(self):
         return self.grpm_nutrigen.to_string()
     
     def get_grpm_nutrigen_rsid(self):

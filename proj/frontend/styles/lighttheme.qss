@@ -1,0 +1,56 @@
+/* Main Window Background */
+QMainWindow {
+    background-color: #fdf7d7;
+}
+
+/* Central Content Area */
+QWidget {
+    background-color: #fdf7d7;
+    color: #000000;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Headers */
+QLabel#header {
+    font-size: 22px;
+    font-weight: bold;
+    color: #BB86FC; /* Light Purple accent */
+    margin-bottom: 10px;
+    qproperty-alignment: AlignCenter;
+}
+
+/* Standard Buttons */
+QPushButton {
+    background-color: #c6fff7;
+    color: #FFFFFF;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #ceaafa;
+    border: 1px solid #BB86FC;
+}
+
+QPushButton:pressed {
+    background-color: #BB86FC;
+    color: #000000;
+}
+
+/* Text Inputs / Boxes */
+QLineEdit, QTextEdit {
+    background-color: #242424;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    padding: 5px;
+    color: white;
+}
+
+/* Sidebar or Container Frames */
+QFrame#card {
+    background-color: #1E1E1E;
+    border-radius: 12px;
+    border: 1px solid #333333;
+}
