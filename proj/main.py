@@ -1,9 +1,9 @@
 import pandas as pd
-import app.analyzer as analyzer
-import app.logic.add_snp_command as add_snp_command
-import app.logic.remove_snp_command as remove_snp_command
-import app.logic.snp_command_invoker as snp_command_invoker
-import app.logic.filtering_patient_snp as filtering_patient_snp
+import logic.analyzer as analyzer
+import logic.add_snp_command as add_snp_command
+import logic.remove_snp_command as remove_snp_command
+import logic.snp_command_invoker as snp_command_invoker
+import logic.filtering_patient_snp as filtering_patient_snp
 
 def menu():
     print("Menu")
@@ -25,7 +25,7 @@ def menu():
     print("0. Exit ")
     analyzer_instance = analyzer.Analyzer()
     editor = snp_command_invoker.SNPCommandInvoker(analyzer_instance.patients_panel)
-    filtering_patients_instance = filtering_patient_snp.FilteringPatientSNP(analyzer_instance.patients_panel)
+    filtering_patients_instance = filtering_patient_snp.FilteringPatientSNP()
     while True:
         option = input("Select an option: ")
         match option:
@@ -48,8 +48,7 @@ def menu():
                 print(shannon_results_mesh)
             case '5':
                 #analyzer_instance = analyzer.Analyzer()
-                patients_rsid = analyzer_instance.get_patients_rsid()
-                print(patients_rsid)
+                print("Nothing to show")
             case '6':
                 #analyzer_instance = analyzer.Analyzer()
                 analyzer_instance.create_csv_file_patients_rsid()

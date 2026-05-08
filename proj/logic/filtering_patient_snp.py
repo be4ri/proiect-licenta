@@ -7,7 +7,7 @@ class FilteringPatientSNP:
     def __init__(self):
         self.patients_repo = PatientsRepository()
 
-    def filter_patients_by_snp(self, rsid):
+    def filter_patients_by_rsid(self, rsid):
         return self.patients_repo.filter_by_rsid(rsid)
     
     def filter_patients_by_chr(self, chr_val):

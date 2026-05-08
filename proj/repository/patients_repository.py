@@ -13,12 +13,12 @@ class PatientsRepository:
         return self.patients['GRPM_RSID']
     
     def add_SNP_to_csv_file(self, GRPM_RSID, Chr, Position, EXCG46):
-        new_row = pd.DataFrame({
-            'GRPM_RSID': [GRPM_RSID], 
-            'Chr': [Chr], 
-            'Position': [Position], 
-            'EXCG46': [EXCG46]
-        })
+        new_row = pd.DataFrame([
+            [GRPM_RSID], 
+            [Chr], 
+            [Position], 
+            [EXCG46]
+        ])
         self.patients = pd.concat([self.patients, new_row], ignore_index=True)
         self._save_to_csv()
 

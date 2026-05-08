@@ -1,7 +1,7 @@
 import pandas as pd
-import app.repository.grpm_nutrigen_repository as grpm_nutrigen_repository
-import app.repository.patients_repository as patients_repository
-import app.repository.rs_repository as rs_repository
+import repository.grpm_nutrigen_repository as grpm_nutrigen_repository
+import repository.patients_repository as patients_repository
+import repository.rs_repository as rs_repository
 
 class MergedPatientsGrpm:
     def __init__(self):

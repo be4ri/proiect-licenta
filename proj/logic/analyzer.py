@@ -1,9 +1,9 @@
 import pandas as pd
 import os
-import app.repository.snp_panel_repository as snp_panel_repository
-import app.repository.grpm_nutrigen_repository as grpm_nutrigen_repository
-import app.repository.merged_patients_grpm as merged_patients_grpm
-import app.repository.patients_repository as patients_repository
+import repository.snp_panel_repository as snp_panel_repository
+import repository.grpm_nutrigen_repository as grpm_nutrigen_repository
+import repository.merged_patients_grpm as merged_patients_grpm
+import repository.patients_repository as patients_repository
 import numpy as np
 
 class Analyzer:
