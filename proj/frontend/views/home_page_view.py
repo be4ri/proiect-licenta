@@ -1,11 +1,12 @@
 import os
 import sys
-
 from PyQt6.QtWidgets import QWidget, QApplication
-from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, QParallelAnimationGroup
+from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, pyqtSignal
 from PyQt6 import uic
 
 class HomePageView(QWidget):
+    request_patients_page = pyqtSignal()
+
     def __init__(self):
         super().__init__()
 
@@ -16,9 +17,8 @@ class HomePageView(QWidget):
             print(f"Error: Could not find '{ui_path}'")
             sys.exit(1)
             
-        # 1. Group all the target buttons (updated to match your new UI names)
-        # Store their original text so we can restore them when the menu re-opens.
         self.sidebar_buttons = [
+            self.home_button,
             self.menu_snp_analyser_button, 
             self.menu_patients_statistics_button, 
             self.menu_patients_file_button, 
@@ -28,40 +28,35 @@ class HomePageView(QWidget):
         ]
         self.button_texts = {btn: btn.text() for btn in self.sidebar_buttons}
         
-        # 2. Set the initial "Open" width of the sidebar (e.g., 150 pixels)
         self.full_sidebar_frame.setMinimumWidth(150)
         self.full_sidebar_frame.setMaximumWidth(150)
         
-        # 3. Connect the menu button to our toggle function
+        self.home_button.setDisabled(True)
         self.menu_button.clicked.connect(self.toggle_menu)
+        
+        self.menu_patients_file_button.clicked.connect(self.open_patients_file)
+
+        #date_and_time = QDateTime.currentDateTime().toString("dddd, MMMM d, yyyy - hh:mm AP")
+        self.date_and_time_label.setText("DATE AND TIME PLACEHOLDER")    #TO DO
 
     def toggle_menu(self):
-        # Get the current width to determine our starting point
         current_width = self.full_sidebar_frame.width()
         
         if current_width == 150: 
-            # THE MENU IS OPEN -> WE MUST CLOSE IT
-            target_width = 50 # Shrink to 50 pixels
-            self.menu_button.setText("≡") # Change to a small hamburger icon
-            
-            # Remove text and disable the buttons so they can't be clicked
+            target_width = 50 
+            self.menu_button.setText("≡") 
             for btn in self.sidebar_buttons:
-                btn.setText("") 
-                btn.setEnabled(False) 
-                
+                btn.hide()  
+                btn.setEnabled(False)   
         else: 
-            # THE MENU IS CLOSED -> WE MUST OPEN IT
             target_width = 150
-            self.menu_button.setText("Menu") # Restore menu button text
-            
-            # Restore original text and enable the buttons
+            self.menu_button.setText("Menu")
             for btn in self.sidebar_buttons:
-                btn.setText(self.button_texts[btn]) 
+                btn.show()  
                 btn.setEnabled(True) 
                 
-        # 4. Create animations for both minimum and maximum width to push the layout
         self.anim_min = QPropertyAnimation(self.full_sidebar_frame, b"minimumWidth")
-        self.anim_min.setDuration(300) # Speed in milliseconds
+        self.anim_min.setDuration(300)
         self.anim_min.setStartValue(current_width)
         self.anim_min.setEndValue(target_width)
         self.anim_min.setEasingCurve(QEasingCurve.Type.InOutQuart) 
@@ -72,10 +67,26 @@ class HomePageView(QWidget):
         self.anim_max.setEndValue(target_width)
         self.anim_max.setEasingCurve(QEasingCurve.Type.InOutQuart)
         
-        # 5. Group the animations together so they run simultaneously
         self.anim_group = QParallelAnimationGroup()
         self.anim_group.addAnimation(self.anim_min)
         self.anim_group.addAnimation(self.anim_max)
         
-        # Start the sliding animation
         self.anim_group.start()
+
+    def open_patients_file(self):
+        self.request_patients_page.emit()
+
+    def open_snp_analyser(self):
+        pass
+
+    def open_patients_statistics(self):
+        pass
+
+    def open_grpm_database(self):
+        pass
+
+    def open_settings(self):
+        pass
+
+    def open_info(self):
+        pass
