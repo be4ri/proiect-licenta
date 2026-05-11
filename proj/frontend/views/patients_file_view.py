@@ -8,6 +8,7 @@ from PyQt6 import uic
 
 class PatientsFileView(QWidget):
     request_home_page = pyqtSignal()
+    request_statistics_page = pyqtSignal()    
     action_add_patient = pyqtSignal(str) 
     action_delete_patient = pyqtSignal(str)
     action_undo = pyqtSignal()
@@ -50,7 +51,9 @@ class PatientsFileView(QWidget):
         self.remove_snp_button.clicked.connect(self.on_open_delete_clicked)
         self.undo_button.clicked.connect(self.handle_undo)
         self.redo_button.clicked.connect(self.handle_redo)
+
         self.home_button.clicked.connect(self.open_home)
+        self.menu_patients_statistics_button.clicked.connect(self.open_patients_statistics)
 
         self.searchbar_line_edit.returnPressed.connect(self.trigger_search)
 
@@ -157,7 +160,7 @@ class PatientsFileView(QWidget):
         pass
     
     def open_patients_statistics(self):
-        pass
+        self.request_statistics_page.emit()
 
     def open_grpm_database(self):
         pass

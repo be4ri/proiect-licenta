@@ -1,5 +1,6 @@
 import sys
 import os
+import pandas as pd
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 import qdarkstyle
 
@@ -9,6 +10,7 @@ sys.path.insert(0, parent_dir)
 
 from views.home_page_view import HomePageView
 from views.patients_file_view import PatientsFileView
+from views.statistics_view import StatisticsView
 import logic.analyzer as analyzer
 import logic.add_snp_command as add_snp_command
 import logic.remove_snp_command as remove_snp_command
@@ -30,17 +32,26 @@ class MainWindow(QMainWindow):
 
         self.home_page = HomePageView()
         self.patients_page = PatientsFileView()
+        self.statistics_page = StatisticsView()
 
         self.stacked_widget.addWidget(self.home_page)
         self.stacked_widget.addWidget(self.patients_page)
+        self.stacked_widget.addWidget(self.statistics_page)
 
         self.home_page.request_patients_page.connect(self.go_to_patients)
+        
         self.patients_page.request_home_page.connect(self.go_to_home)
         self.patients_page.action_add_patient.connect(self.handle_add_snp)
         self.patients_page.action_delete_patient.connect(self.handle_remove_snp)
         self.patients_page.action_undo.connect(self.handle_undo)
         self.patients_page.action_redo.connect(self.handle_redo)
         self.patients_page.action_search.connect(self.handle_search)
+        
+        self.home_page.menu_patients_statistics_button.clicked.connect(self.go_to_statistics)
+        self.patients_page.menu_patients_statistics_button.clicked.connect(self.go_to_statistics)
+        self.statistics_page.request_home_page.connect(self.go_to_home)
+        self.statistics_page.request_patients_page.connect(self.go_to_patients)
+        self.statistics_page.action_request_table.connect(self.handle_statistics_table_request)
 
         self.stacked_widget.setCurrentWidget(self.home_page)
 
@@ -49,6 +60,27 @@ class MainWindow(QMainWindow):
 
     def go_to_home(self):
         self.stacked_widget.setCurrentWidget(self.home_page)
+        
+    def go_to_statistics(self):
+        count = self.analyzer_instance.number_of_snps_matching()
+        self.statistics_page.update_matching_count_label(count)
+        self.stacked_widget.setCurrentWidget(self.statistics_page)
+
+    def handle_statistics_table_request(self, category):
+        df = None
+        try:
+            if category == "Matching SNPs":
+                df = self.analyzer_instance.matching_snps()
+            elif category == "MeSH Statistics":
+                df = self.analyzer_instance.mesh_statistics()
+            elif category == "Shannon Index per SNP":
+                df = self.analyzer_instance.shannon_index_per_snp()
+            elif category == "Shannon Index per MeSH Term":
+                df = self.analyzer_instance.shannon_index_per_mesh()
+            
+            self.statistics_page.populate_table(df)
+        except Exception as e:
+            print(f"Statistics Data Error: {e}")
 
     def handle_add_snp(self, data_string):
         try:

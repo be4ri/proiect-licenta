@@ -6,6 +6,7 @@ from PyQt6 import uic
 
 class HomePageView(QWidget):
     request_patients_page = pyqtSignal()
+    request_statistics_page = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -35,6 +36,7 @@ class HomePageView(QWidget):
         self.menu_button.clicked.connect(self.toggle_menu)
         
         self.menu_patients_file_button.clicked.connect(self.open_patients_file)
+        self.menu_patients_statistics_button.clicked.connect(self.open_patients_statistics)
 
         #date_and_time = QDateTime.currentDateTime().toString("dddd, MMMM d, yyyy - hh:mm AP")
         self.date_and_time_label.setText("DATE AND TIME PLACEHOLDER")    #TO DO
@@ -80,7 +82,7 @@ class HomePageView(QWidget):
         pass
 
     def open_patients_statistics(self):
-        pass
+        self.request_statistics_page.emit()
 
     def open_grpm_database(self):
         pass
