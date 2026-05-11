@@ -19,3 +19,5 @@ class FilteringPatientSNP:
     def filter_patients_by_excg46(self, excg46):
         return self.patients_repo.filter_by_excg46(excg46)
     
+    def all_patients(self):
+        return self.patients_repo.get_patients()

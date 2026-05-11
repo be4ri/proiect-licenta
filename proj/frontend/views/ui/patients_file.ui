@@ -565,10 +565,29 @@
            </property>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_5">
+        <property name="frameShape">
+         <enum>QFrame::Shape::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <widget class="QScrollBar" name="patients_scroll_bar">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>info about the table...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="remove_snp_from_table_button">
+           <property name="text">
+            <string>Remove SNP</string>
            </property>
           </widget>
          </item>

@@ -1,7 +1,9 @@
 import os
 import sys
+import pandas as pd
 from PyQt6.QtWidgets import QWidget, QApplication
-from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, pyqtSignal
+from PyQt6.QtCore import QPropertyAnimation, QEasingCurve, QParallelAnimationGroup, pyqtSignal, Qt
+from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6 import uic
 
 class PatientsFileView(QWidget):
@@ -10,6 +12,7 @@ class PatientsFileView(QWidget):
     action_delete_patient = pyqtSignal(str)
     action_undo = pyqtSignal()
     action_redo = pyqtSignal()
+    action_search = pyqtSignal(str, str)
 
     def __init__(self):
         super().__init__()
@@ -18,7 +21,6 @@ class PatientsFileView(QWidget):
         try:
             uic.loadUi(ui_path, self)
         except FileNotFoundError:
-            print(f"Error: Could not find '{ui_path}'")
             sys.exit(1)
 
         self.sidebar_buttons = [
@@ -48,8 +50,33 @@ class PatientsFileView(QWidget):
         self.remove_snp_button.clicked.connect(self.on_open_delete_clicked)
         self.undo_button.clicked.connect(self.handle_undo)
         self.redo_button.clicked.connect(self.handle_redo)
-
         self.home_button.clicked.connect(self.open_home)
+
+        self.searchbar_line_edit.returnPressed.connect(self.trigger_search)
+
+    def trigger_search(self):
+        search_term = self.searchbar_line_edit.text().strip()
+        category = self.search_combobox.currentText()
+        self.action_search.emit(category, search_term)
+
+    def populate_table(self, dataframe):
+        try:
+            if dataframe is None or (isinstance(dataframe, pd.DataFrame) and dataframe.empty):
+                self.patients_table_view.setModel(QStandardItemModel(0, 0))
+                return
+
+            model = QStandardItemModel(len(dataframe), len(dataframe.columns))
+            model.setHorizontalHeaderLabels(dataframe.columns.astype(str).tolist())
+
+            for row_index, row_data in enumerate(dataframe.itertuples(index=False)):
+                for col_index, value in enumerate(row_data):
+                    item = QStandardItem(str(value))
+                    item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable) 
+                    model.setItem(row_index, col_index, item)
+
+            self.patients_table_view.setModel(model)
+        except Exception as e:
+            print(f"Table Population Error: {e}")
 
     def toggle_menu(self):
         current_width = self.full_sidebar_frame.width()
@@ -109,6 +136,7 @@ class PatientsFileView(QWidget):
             self.action_add_patient.emit(f"{rsid}\t{Chr}\t{Position}\t{excg46}")
         elif self.current_operation_mode == "DELETE":
             self.action_delete_patient.emit(f"{rsid}\t{Chr}\t{Position}\t{excg46}")
+            
         self.rsid_input.clear()
         self.chr_input.clear()
         self.position_input.clear()
