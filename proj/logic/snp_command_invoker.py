@@ -4,7 +4,6 @@ from .add_snp_command import AddSNPCommand
 from .remove_snp_command import RemoveSNPCommand
 
 class SNPCommandInvoker:
-    """Manager class that handles validation and the undo/redo history stacks."""
     def __init__(self, patients_repository):
         self.repository = patients_repository
         self._undo_stack = []

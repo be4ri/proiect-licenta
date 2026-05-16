@@ -40,7 +40,6 @@ class StatisticsView(QWidget):
         self.home_button.clicked.connect(self.open_home)
         self.menu_patients_file_button.clicked.connect(self.open_patients_file)
 
-        # Connect each distinct button directly to its specific table category
         self.view_matching_snps_button.clicked.connect(lambda: self.action_request_table.emit("Matching SNPs"))
         self.pushButton.clicked.connect(lambda: self.action_request_table.emit("MeSH Statistics"))
         self.shannon_mesh_per_snp_button.clicked.connect(lambda: self.action_request_table.emit("Shannon Index per SNP"))
