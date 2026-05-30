@@ -320,27 +320,20 @@
             <enum>QFrame::Shape::NoFrame</enum>
            </property>
            <property name="text">
-            <string>2.2.2 Genome-Wide Association Studies (GWAS) and risk alleles
-Genome-Wide Association Studies (GWAS) serve as a comprehensive methodology
-for identifying the statistical associations between specific genetic variants and observable
-traits or diseases. Unlike traditional candidate-gene approaches that focus
-on pre-selected regions of the genome, GWAS involves scanning the entire set of
-DNA across large populations. by comparing the genetic profiles of individuals
-with a specific nutrition-related condition to a control group, researchers can identify
-Single Nucleotide Polymorphisms (SNPs) where the frequency of a particular
-allele differs significantly.
-The identification of a risk allele within this framework indicates an increased
-genetic susceptibility to a condition rather than a definitive diagnosis. In the context
-of nutrigenomics, these alleles often signify metabolic predispositions. For example,
-specific variants within the FTO gene are frequently associated with higher
-Body Mass Index (BMI) or a predisposition toward extreme obesity. The strength
-of these associations is quantified as an effect size, which is typically recorded in
-3
-CHAPTER 2. CLINICAL CONTEXT AND GENOMIC PRINCIPLES
-genomic databases as an odds ratio or a beta coefficient. By aggregating the impact
-of multiple risk alleles, researchers can develop polygenic risk scores that provide
-a comprehensive view of an individual’s genetic landscape, allowing for the design
-of personalized dietary interventions based on quantified genetic vulnerabilities</string>
+            <string>Nutrigenomics sits at the intersection of two fields that have each seen rapid progress
+over the last two decades: high-throughput genomics and computational data sci-
+ence. The promise is straightforward—if we know which genetic variants a patient
+carries, and if we know how those variants relate to nutritional metabolism, we can
+offer dietary guidance that goes beyond generic population-level recommendations.
+The challenge, as with most things in bioinformatics, is that the data is messy, het-
+erogeneous, and far too large to interpret by hand.
+This thesis describes a computational framework that attempts to close part of
+that gap. The system takes a patient’s raw genotype data—a list of Single Nucleotide
+Polymorphisms (SNPs) extracted from a genotyping panel—and maps it against the
+GRPM-GWAS nutrigenetic dataset [DFMP+25] to produce personalised risk assess-
+ments for nutrition-related diseases. Beyond simple allele matching, the framework
+incorporates machine learning models trained on BERT-encoded features to classify
+the significance of each genetic variant.</string>
            </property>
            <property name="textFormat">
             <enum>Qt::TextFormat::PlainText</enum>

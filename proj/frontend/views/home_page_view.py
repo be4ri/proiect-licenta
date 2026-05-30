@@ -31,6 +31,8 @@ class HomePageView(QWidget):
         
         self.full_sidebar_frame.setMinimumWidth(150)
         self.full_sidebar_frame.setMaximumWidth(150)
+
+        
         
         self.home_button.setDisabled(True)
         self.menu_button.clicked.connect(self.toggle_menu)
